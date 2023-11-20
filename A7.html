@@ -1,0 +1,77 @@
+<html>
+    <head>
+      <title>Array Operations</title>
+    </head>
+    <body>
+      <h1>Array Operations</h1>
+    
+      <p>Enter the size of the array:</p>
+      <input type="number" id="arraySize" placeholder="Enter size">
+    
+      <div id="addObjectsInput">
+        <p>Enter an object (e.g., {"name": "John", "age": 30}):</p>
+        <input type="text" id="inputObject" placeholder="Enter object">
+        <button onclick="addObjectToArray()">Add Object to Array</button>
+      </div>
+    
+      <div id="checkArrayAtIndexInput">
+        <p>Enter an index to check:</p>
+        <input type="number" id="indexToCheck" placeholder="Enter index">
+        <button onclick="checkArrayAtIndex()">Check Array at Index</button>
+      </div>
+    
+      <p>Select an operation:</p>
+      <select id="operationSelect">
+        <option value="append">View Array</option>
+        <option value="checkIndex">Check Array at Index</option>
+      </select>
+    
+      <button onclick="performOperation()">Perform Operation</button>
+    
+      <div id="result"></div>
+    
+      <script>
+        const objectArray = [];
+    
+        function addObjectToArray() {
+          const inputObject = document.getElementById('inputObject').value;
+    
+          try {
+            const object = JSON.parse(inputObject);
+            objectArray.push(object);
+            document.getElementById('inputObject').value = ''; // Clear the input field
+            alert('Object added to the array!');
+          } catch (error) {
+            alert('Invalid object format. Please enter a valid JSON object.');
+          }
+        }
+    
+        function checkArrayAtIndex() {
+          const indexToCheck = parseInt(document.getElementById('indexToCheck').value);
+    
+          if (indexToCheck >= 0 && indexToCheck < objectArray.length) {
+            const isArrayAtIndex = Array.isArray(objectArray[indexToCheck]);
+            alert(`The object at index ${indexToCheck} is an array: ${isArrayAtIndex}`);
+          } else {
+            alert('Invalid index. Please enter a valid index.');
+          }
+        }
+    
+        function performOperation() {
+          const arraySize = parseInt(document.getElementById('arraySize').value);
+          const selectedOperation = document.getElementById('operationSelect').value;
+    
+          if (selectedOperation === 'append') {
+            if (arraySize < 1) {
+              document.getElementById('result').innerText = 'Array size should be at least 1.';
+              return;
+            }
+    
+            document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(objectArray, null, 2) + '</pre';
+          } else if (selectedOperation === 'checkIndex') {
+            // You can add specific logic here for the "Check Array at Index" operation if needed.
+          }
+        }
+      </script>
+    </body>
+    </html>
